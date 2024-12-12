@@ -234,7 +234,6 @@ static bool apple_match_product_name(void)
 		"MacBookPro14,3",
 		"MacBookPro15,1",
 		"MacBookPro15,3",
-		"MacBookPro16,1",
 		"MacBookPro16,4",
 	};
 	const struct efi_smbios_type1_record *record;
