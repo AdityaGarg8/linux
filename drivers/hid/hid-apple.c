@@ -298,28 +298,6 @@ static const struct apple_key_translation apple_fn_keys_spi[] = {
 	{ }
 };
 
-static const struct apple_key_translation apple_fn_keys_mbp13[] = {
-	{ KEY_BACKSPACE, KEY_DELETE },
-	{ KEY_ENTER,	KEY_INSERT },
-	{ KEY_UP,	KEY_PAGEUP },
-	{ KEY_DOWN,	KEY_PAGEDOWN },
-	{ KEY_LEFT,	KEY_HOME },
-	{ KEY_RIGHT,	KEY_END },
-	{ KEY_1,	KEY_F1 },
-	{ KEY_2,	KEY_F2 },
-	{ KEY_3,	KEY_F3 },
-	{ KEY_4,	KEY_F4 },
-	{ KEY_5,	KEY_F5 },
-	{ KEY_6,	KEY_F6 },
-	{ KEY_7,	KEY_F7 },
-	{ KEY_8,	KEY_F8 },
-	{ KEY_9,	KEY_F9 },
-	{ KEY_0,	KEY_F10 },
-	{ KEY_MINUS,	KEY_F11 },
-	{ KEY_EQUAL,	KEY_F12 },
-	{ }
-};
-
 static const struct apple_key_translation powerbook_fn_keys[] = {
 	{ KEY_BACKSPACE, KEY_DELETE },
 	{ KEY_F1,	KEY_BRIGHTNESSDOWN,     APPLE_FLAG_FKEY },
@@ -539,7 +517,7 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
 			switch (hid->product) {
 			case SPI_DEVICE_ID_APPLE_MACBOOK_PRO13_2020:
 			case HOST_DEVICE_ID_APPLE_MACBOOK_PRO13_2022:
-				table = apple_fn_keys_mbp13;
+				table = macbookpro_dedicated_esc_fn_keys;
 				break;
 			default:
 				table = apple_fn_keys_spi;
