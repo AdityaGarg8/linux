@@ -736,66 +736,6 @@ static int magicmouse_input_configured(struct hid_device *hdev,
 	return 0;
 }
 
-static int magicmouse_enable_multitouch(struct hid_device *hdev)
-{
-	const u8 *feature;
-	const u8 feature_mt[] = { 0xD7, 0x01 };
-	const u8 feature_mt_mouse2[] = { 0xF1, 0x02, 0x01 };
-	const u8 feature_mt_trackpad2_usb[] = { 0x02, 0x01 };
-	const u8 feature_mt_trackpad2_bt[] = { 0xF1, 0x02, 0x01 };
-	u8 *buf;
-	int ret;
-	int feature_size;
-
-	switch (hdev->product) {
-	case USB_DEVICE_ID_APPLE_MAGICTRACKPAD2:
-	case USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC:
-		switch (hdev->vendor) {
-		case BT_VENDOR_ID_APPLE:
-			feature_size = sizeof(feature_mt_trackpad2_bt);
-			feature = feature_mt_trackpad2_bt;
-			break;
-		default: /* USB_VENDOR_ID_APPLE */
-			feature_size = sizeof(feature_mt_trackpad2_usb);
-			feature = feature_mt_trackpad2_usb;
-		}
-		break;
-	case USB_DEVICE_ID_APPLE_MAGICMOUSE2:
-	case USB_DEVICE_ID_APPLE_MAGICMOUSE2_USBC:
-		feature_size = sizeof(feature_mt_mouse2);
-		feature = feature_mt_mouse2;
-		break;
-	default:
-		if (hdev->vendor == SPI_VENDOR_ID_APPLE) {
-			feature_size = sizeof(feature_mt_trackpad2_usb);
-			feature = feature_mt_trackpad2_usb;
-		} else {
-			feature_size = sizeof(feature_mt);
-			feature = feature_mt;
-		}
-	}
-
-	buf = kmemdup(feature, feature_size, GFP_KERNEL);
-	if (!buf)
-		return -ENOMEM;
-
-	ret = hid_hw_raw_request(hdev, buf[0], buf, feature_size,
-				HID_FEATURE_REPORT, HID_REQ_SET_REPORT);
-	kfree(buf);
-	return ret;
-}
-
-static void magicmouse_enable_mt_work(struct work_struct *work)
-{
-	struct magicmouse_sc *msc =
-		container_of(work, struct magicmouse_sc, work.work);
-	int ret;
-
-	ret = magicmouse_enable_multitouch(msc->hdev);
-	if (ret < 0)
-		hid_err(msc->hdev, "unable to request touch data (%d)\n", ret);
-}
-
 static int magicmouse_fetch_battery(struct hid_device *hdev)
 {
 #ifdef CONFIG_HID_BATTERY_STRENGTH
