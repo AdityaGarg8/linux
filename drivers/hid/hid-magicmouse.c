@@ -908,8 +908,10 @@ static int magicmouse_probe(struct hid_device *hdev,
 		}
 		break;
 	default: /* USB_DEVICE_ID_APPLE_MAGICTRACKPAD */
-		if (id->vendor == SPI_VENDOR_ID_APPLE) {
-			report = hid_register_report(hdev, HID_INPUT_REPORT, 2, 0);
+		if (id->bus == BUS_SPI) {
+			report = hid_register_report(hdev, HID_INPUT_REPORT, SPI_REPORT_ID, 0);
+		} else if (id->bus == BUS_HOST) {
+			report = hid_register_report(hdev, HID_INPUT_REPORT, MTP_REPORT_ID, 0);
 		} else {
 			report = hid_register_report(hdev, HID_INPUT_REPORT,
 				TRACKPAD_REPORT_ID, 0);
