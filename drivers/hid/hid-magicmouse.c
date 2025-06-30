@@ -766,8 +766,13 @@ static int magicmouse_enable_multitouch(struct hid_device *hdev)
 		feature = feature_mt_mouse2;
 		break;
 	default:
-		feature_size = sizeof(feature_mt);
-		feature = feature_mt;
+		if (hdev->vendor == SPI_VENDOR_ID_APPLE) {
+			feature_size = sizeof(feature_mt_trackpad2_usb);
+			feature = feature_mt_trackpad2_usb;
+		} else {
+			feature_size = sizeof(feature_mt);
+			feature = feature_mt;
+		}
 	}
 
 	buf = kmemdup(feature, feature_size, GFP_KERNEL);
