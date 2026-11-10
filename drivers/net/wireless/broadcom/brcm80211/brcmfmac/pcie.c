@@ -2286,24 +2286,24 @@ brcmf_pcie_prepare_fw_request(struct brcmf_pciedev_info *devinfo)
 		/* Example: apple,shikoku-RASP-m-6.11-X3 */
 		if (devinfo->settings->antenna_sku)
 			bt[i++] = devm_kasprintf(dev, GFP_KERNEL, "%s-%s-%s-%s-%s",
-					       devinfo->settings->board_type,
-					       otp->module, otp->vendor, otp->version,
-					       devinfo->settings->antenna_sku);
+					         devinfo->settings->board_type,
+					         otp->module, otp->vendor, otp->version,
+					         devinfo->settings->antenna_sku);
 		else
 			brcmf_dbg(PCIE, "Antenna SKU not found\n");
 		bt[i++] = devm_kasprintf(dev, GFP_KERNEL, "%s-%s-%s-%s",
-				       devinfo->settings->board_type,
-				       otp->module, otp->vendor, otp->version);
+				         devinfo->settings->board_type,
+				         otp->module, otp->vendor, otp->version);
 		bt[i++] = devm_kasprintf(dev, GFP_KERNEL, "%s-%s-%s",
-				       devinfo->settings->board_type,
-				       otp->module, otp->vendor);
+				         devinfo->settings->board_type,
+				         otp->module, otp->vendor);
 		bt[i++] = devm_kasprintf(dev, GFP_KERNEL, "%s-%s",
-				       devinfo->settings->board_type,
-				       otp->module);
+				         devinfo->settings->board_type,
+				         otp->module);
 		if (devinfo->settings->antenna_sku)
 			bt[i++] = devm_kasprintf(dev, GFP_KERNEL, "%s-%s",
-					       devinfo->settings->board_type,
-					       devinfo->settings->antenna_sku);
+					         devinfo->settings->board_type,
+					         devinfo->settings->antenna_sku);
 		bt[i++] = devinfo->settings->board_type;
 
 		for (j = 0; j < i - 1; j++) {
